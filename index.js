@@ -228,7 +228,7 @@ const lay6storage = multer.diskStorage({
 
 const SlideImgupload = multer({ storage: slideImgstorage });
 app.post("/ApplyslideImg", SlideImgupload.single("image"), (req, res) => {
-  slideImgpath = "/uploads/slideimg/" + slideImgpath;
+  slideImgpath = "/uploads/slideImg/" + slideImgpath;
   Data.slides.push({ image: slideImgpath });
   var jsonString = JSON.stringify(Data);
 
@@ -244,7 +244,7 @@ app.post("/ApplyslideImg", SlideImgupload.single("image"), (req, res) => {
 
 const SecImgupload = multer({ storage: secImgstorage });
 app.post("/ApplysecImg", SecImgupload.single("image"), (req, res) => {
-  secImgpath = "/uploads/secimg/" + secImgpath;
+  secImgpath = "/uploads/secImg/" + secImgpath;
   Data.secImg = secImgpath;
   var jsonString = JSON.stringify(Data);
 
