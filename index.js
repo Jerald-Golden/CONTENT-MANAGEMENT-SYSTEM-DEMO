@@ -1,6 +1,5 @@
 const express = require("express");
 const multer = require("multer");
-const cookieParser = require('cookie-parser');
 const app = express();
 const bodyParser = require("body-parser");
 const path = require('path');
@@ -8,11 +7,7 @@ const axios = require('axios');
 const fs = require("fs");
 const qs = require('qs');
 app.use(express.static("App"));
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-let refreshToken = null;
-let username = null;
 
 //Json reading
 
