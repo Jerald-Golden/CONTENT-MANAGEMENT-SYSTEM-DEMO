@@ -1,0 +1,409 @@
+<div id="content" style="background-color: blue; height: 90vh;">
+    <div id="nav-tab" style="width: 10%; background: white; height: 90vh; float: left;">
+        <ul>
+            <li><a href="#" onclick="home()">HOME</a></li>
+            <li><a href="#" onclick="product()">PRODUCTS</a></li>
+            <li><a href="#" onclick="addpage()">ADDPAGE</a></li>
+        </ul>
+    </div>
+    <div style="width: 90%; height: 90vh; float: right;">
+        <div style="width: 100%; background: palegreen; height: 5vh;">
+            <h1 style="margin: 0px;"><b>SELECT LAYOUT</b></h1>
+        </div>
+        <div style="background: palegoldenrod; width: 100%;height: 85vh;position: fixed;">
+            <div class="layoutcontainer"
+                style="background: lavender; height: 90%; width: 80%; margin-top: 5vh; margin-left: 5%;overflow: scroll;">
+                <div class="layout-container">
+                    <div class="layout" style="background: gray;">
+                        <div id="container"
+                            style="height:100px;width:180px;background:transparent;margin-top:50px;margin-left:7px;border: solid white;border-radius:5px">
+                            <h1 style="font-size:larger;">ABOUT PAGE</h1>
+                            <P>CONTENTS</P>
+                        </div>
+                    </div>
+                    <button onclick="layout1()" class="apply-button">Apply</button>
+                    <button onclick="removelayout1()" class="remove-button">Remove</button>
+                    <p id="lay1"></p>
+                </div>
+                <div id="lay1-edit" style="background: lightblue; height: 360px;width: calc(100% - 250px)">
+                    <textarea style="height: 80%; resize: none; width:95%; overflow:scroll; margin:10px;" id="lay1-text"
+                        name="lay1-text" required></textarea><br><br>
+                    <button style="float: right; margin-right: 10px;" onclick="applylay1text()">ApplyText</button>
+                </div>
+                <div class="layout-container">
+                    <div class="layout" style="background: lightblue;">
+                        <div id="img1" style="width: 100%; height: 25%; background: black;overflow:hidden;"></div>
+                        <div id="img2" style="width: 40%; height: 25%; float: left; background: bisque;"></div>
+                        <div id="img3" style="width: 60%; height: 25%; background: gray; float: right;"></div>
+                        <div id="img4" style="width: 100%; height: 25%;float: left; background: black;"></div>
+                        <div id="img5" style="width: 40%; height: 25%; float: left; background: bisque;"></div>
+                        <div id="img6" style="width: 60%; height: 25%; background: gray; float: right;"></div>
+                    </div>
+                    <button onclick="layout2()" class="apply-button">Apply</button>
+                    <button onclick="removelayout2()" class="remove-button">Remove</button>
+                    <p id="lay2"></p>
+                </div>
+                <div id="lay2-edit" style="background: lightblue; height: 360px;width: calc(100% - 250px);">
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg1" id="uploadimg1">
+                            <input type="file" name="image" accept="image/*">
+                            <textarea id="titletext" name="title-text" required></textarea>
+                            <button type="submit">Insert</button>
+                        </form>
+                    </div><br>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg2" id="uploadimg2"><input
+                                type="file" name="image" accept="image/*"><button type="submit">Insert</button></form>
+                    </div><br>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg3" id="uploadimg3"><input
+                                type="file" name="image" accept="image/*"><button type="submit">Insert</button></form>
+                    </div><br>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg4" id="uploadimg4"><input
+                                type="file" name="image" accept="image/*"><button type="submit">Insert</button></form>
+                    </div><br>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg5" id="uploadimg5"><input
+                                type="file" name="image" accept="image/*"><button type="submit">Insert</button></form>
+                    </div><br>
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/Applyimg6" id="uploadimg6"><input
+                                type="file" name="image" accept="image/*"><button type="submit">Insert</button></form>
+                    </div><br>
+                </div>
+                <div class="layout-container">
+                    <div class="layout" style="background: brown;">
+                        <div id="container"
+                            style="height:100px;width:180px;background:transparent;margin-top:50px;margin-left:7px;border: solid white;border-radius:5px">
+                            <h1 style="font-size:larger;">ANOTHER PAGE</h1>
+                        </div>
+                    </div>
+                    <button onclick="layout3()" class="apply-button">Apply</button>
+                    <button onclick="removelayout3()" class="remove-button">Remove</button>
+                    <p id="lay3"></p>
+                </div>
+                <div id="lay3-edit" style="background: lightblue; height: 360px;width: calc(100% - 250px)"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    #nav-tab li {
+        text-decoration: none;
+        list-style: none;
+        float: left;
+        margin: 20px;
+        width: 100%;
+        margin-left: -30px;
+    }
+
+    #nav-tab li a {
+        text-decoration: none;
+        color: #000;
+        padding: 10px;
+        background: bisque;
+    }
+
+    .layoutcontainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .layout-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        height: 360px;
+        width: 250px;
+        background: rgb(0, 204, 255);
+    }
+
+    .layout {
+        height: 220px;
+        width: 200px;
+        margin-top: 15px;
+    }
+
+    .apply-button,
+    .remove-button {
+        margin-top: 10px;
+    }
+</style>
+<script>
+
+    
+    fetchlayouts()
+
+    function fetchlayouts() {
+        fetch('/getlayouts')
+            .then(response => response.json())
+            .then((data) => {
+                (data.layout1 === true) ? (document.getElementById("lay1").innerHTML = "Created") : (document.getElementById("lay1").innerHTML = "Not used");
+                (data.layout2 === true) ? (document.getElementById("lay2").innerHTML = "Created") : (document.getElementById("lay2").innerHTML = "Not used");
+                (data.layout3 === true) ? (document.getElementById("lay3").innerHTML = "Created") : (document.getElementById("lay3").innerHTML = "Not used");
+
+            })
+
+        fetch('/getlaytext')
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('lay1-text').value = data.lay1text;
+                    document.getElementById('titletext').value = data.title;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+
+    }
+
+    function layout1() {
+        fetch('/Addlayout1')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay1").innerHTML = "Created";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function removelayout1() {
+        fetch('/Removelayout1')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay1").innerHTML = "Not used";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function layout2() {
+        fetch('/Addlayout2')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay2").innerHTML = "Created";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function removelayout2() {
+        fetch('/Removelayout2')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay2").innerHTML = "Not used";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function layout3() {
+        fetch('/Addlayout3')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay3").innerHTML = "Created";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function removelayout3() {
+        fetch('/Removelayout3')
+            .then(response => response.json())
+            .then((data) => {
+                document.getElementById("lay3").innerHTML = "Not used";
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    }
+
+    function applylay1text() {
+        const lay1text = document.getElementById('lay1-text').value;
+
+        fetch('/Addlay1texts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `lay1text=${lay1text}`,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    lay1text.value = data;
+                }
+            })
+            .catch(error => {
+                console.error('Error applying JSON:', error);
+            });
+    }
+
+    //layout 2 image
+
+    document.getElementById('uploadimg1').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const title = document.getElementById('titletext').value;
+        formData.append('title', title);
+
+        fetch('/Applyimg1', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img1').innerHTML = '';
+                    document.getElementById('img1').innerHTML += `<div style="position: relative;"><img style="width: 100%; height: 100%;" src="${data.lay1}"><p style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;color:white">${data.title}</p></div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    document.getElementById('uploadimg2').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/Applyimg2', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img2').innerHTML = '';
+                    document.getElementById('img2').innerHTML += `<img style="width:98%; height:98%;margin:1%" src="${data.lay2}">`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    document.getElementById('uploadimg3').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/Applyimg3', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img3').innerHTML = '';
+                    document.getElementById('img3').innerHTML += `<img style="width:98%; height:98%;margin:1%" src="${data.lay3}">`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    document.getElementById('uploadimg4').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/Applyimg4', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img4').innerHTML = '';
+                    document.getElementById('img4').innerHTML += `<img style="width:98%; height:98%;margin:1%" src="${data.lay4}">`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    document.getElementById('uploadimg5').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/Applyimg5', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img5').innerHTML = '';
+                    document.getElementById('img5').innerHTML += `<img style="width:98%; height:98%;margin:1%" src="${data.lay5}">`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    document.getElementById('uploadimg6').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/Applyimg6', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    document.getElementById('img6').innerHTML = '';
+                    document.getElementById('img6').innerHTML += `<img style="width:98%; height:98%;margin:1%" src="${data.lay6}">`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+    });
+
+    function applylayimg() {
+
+        {
+            fetch('/getLayImg')
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.getElementById('img1').innerHTML = '';
+                        document.getElementById('img1').innerHTML += `<div style="position: relative;"><img style="width: 100%; height: 100%;" src="${data.lay1}"><p style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;color:white">${data.title}</p></div>`;
+                        document.getElementById('img2').innerHTML = '';
+                        document.getElementById('img2').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay2}">`;
+                        document.getElementById('img3').innerHTML = '';
+                        document.getElementById('img3').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay3}">`;
+                        document.getElementById('img4').innerHTML = '';
+                        document.getElementById('img4').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay4}">`;
+                        document.getElementById('img5').innerHTML = '';
+                        document.getElementById('img5').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay5}">`;
+                        document.getElementById('img6').innerHTML = '';
+                        document.getElementById('img6').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay6}">`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+
+        }
+    }
+    applylayimg();
+</script>

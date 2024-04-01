@@ -1,0 +1,236 @@
+<div id="content" style="background-color: blue; height: 90vh;">
+    <div id="nav-tab" style="width: 10%; background: white; height: 90vh; float: left;">
+        <ul>
+            <li><a href="#" onclick="home()">HOME</a></li>
+            <li><a href="#" onclick="product()">PRODUCTS</a></li>
+            <li><a href="#" onclick="addpage()">ADDPAGE</a></li>
+        </ul>
+    </div>
+    <div style="width: 90%; height: 90vh; float: right;">
+        <div style="width: 100%; background: brown; height: 100%; overflow: scroll;">
+            <div style="width: 100%; background: blueviolet; height: 40%; overflow: scroll;">
+                <form enctype="multipart/form-data" method="post" action="/Applyitem" id="uploadItemForm">
+                    <input type="file" name="image" accept="image/*"><br><br>
+                    <textarea style=" width:95%; overflow:scroll; margin:10px;" id="name-text"
+                        required></textarea><br><br>
+                    <textarea style=" width:95%; overflow:scroll; margin:10px;" id="des-text"
+                        required></textarea><br>
+
+                    <label style="color: white;" for="class1">Laptop</label>
+                    <input type="radio" id="class1" name="itemClass" value="Laptop"><br>
+
+                    <label style="color: white;" for="class2">Mobile</label>
+                    <input type="radio" id="class2" name="itemClass" value="Mobile"><br>
+
+                    <label style="color: white;" for="class3">Monitor</label>
+                    <input type="radio" id="class3" name="itemClass" value="Monitor"><br>
+
+                    <label style="color: white;" for="class4">Keyboard</label>
+                    <input type="radio" id="class4" name="itemClass" value="Keyboard"><br>
+
+                    <button type="submit">Insert</button>
+                </form>
+                <button onclick="deleteCardJson()">Delete</button>
+            </div>
+
+            <div style="width: 100%; background: rgb(255, 191, 236); height: auto; min-height: 60%;">
+                <div id="card-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #nav-tab li {
+        text-decoration: none;
+        list-style: none;
+        float: left;
+        margin: 20px;
+        width: 100%;
+        margin-left: -30px;
+    }
+
+    #nav-tab li a {
+        text-decoration: none;
+        color: #000;
+        padding: 10px;
+        background: bisque;
+    }
+</style>
+<script>
+    document.getElementById('uploadItemForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        let classValue;
+        const formData = new FormData(this);
+
+        const itemName = document.getElementById('name-text').value;
+        const itemDescription = document.getElementById('des-text').value;
+        const selectedClass = document.querySelector('input[name="itemClass"]:checked');
+
+        formData.append('itemName', itemName);
+        formData.append('itemDescription', itemDescription);
+        formData.append('itemClass', selectedClass.value);
+
+        document.getElementById('name-text').value = '';
+        document.getElementById('des-text').value = '';
+
+        fetch('/Applyitem', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    const cardContainer = document.getElementById('card-container');
+                    cardContainer.innerHTML = '';
+                    data.items.forEach(item => {
+                        const source = item.item.find(i => i.source)?.source || '';
+                        const name = item.item.find(i => i.name)?.name || '';
+                        const description = item.item.find(i => i.des)?.des || '';
+                        classValue = item.item.find(i => i.class)?.class || '';
+                        createCard(source, name, description);
+                    });
+                } else {
+                    const cardContainer = document.getElementById('card-container');
+                    cardContainer.innerHTML = '';
+                    document.getElementById('card-container').innerHTML += `<p>There is no card</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+
+        function createCard(source, name, description) {
+            const cardContainer = document.getElementById('card-container');
+            const card = document.createElement('div');
+            card.classList.add("card", `${classValue}`);
+            const image = document.createElement('img');
+            image.src = source;
+            image.alt = name;
+            const nameElement = document.createElement('p');
+            nameElement.textContent = name;
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = description;
+            card.appendChild(image);
+            card.appendChild(nameElement);
+            card.appendChild(descriptionElement);
+            cardContainer.appendChild(card);
+        }
+    });
+
+    fetchJson();
+
+    function fetchJson() {
+        {
+            let classValue;
+            fetch('/getitems')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items.length > 0) {
+                        const cardContainer = document.getElementById('card-container');
+                        cardContainer.innerHTML = '';
+                        data.items.forEach(item => {
+                            const source = item.item.find(i => i.source)?.source || '';
+                            const name = item.item.find(i => i.name)?.name || '';
+                            const description = item.item.find(i => i.des)?.des || '';
+                            classValue = item.item.find(i => i.class)?.class || '';
+                            createCard(source, name, description);
+                        });
+                    } else {
+                        const cardContainer = document.getElementById('card-container');
+                        cardContainer.innerHTML = '';
+                        document.getElementById('card-container').innerHTML += `<p>There is no card</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+            function createCard(source, name, description) {
+                const cardContainer = document.getElementById('card-container');
+                const card = document.createElement('div');
+                card.classList.add("card", `${classValue}`);
+                const image = document.createElement('img');
+                image.src = source;
+                image.alt = name;
+                const nameElement = document.createElement('p');
+                nameElement.textContent = name;
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = description;
+                card.appendChild(image);
+                card.appendChild(nameElement);
+                card.appendChild(descriptionElement);
+                cardContainer.appendChild(card);
+            }
+
+        }
+
+    }
+
+    function deleteCardJson() {
+        let classValue;
+        fetch('/DeleteCard')
+            .then(response => response.json())
+            .then(data => {
+                if (data.items.length > 0) {
+                    const cardContainer = document.getElementById('card-container');
+                    cardContainer.innerHTML = '';
+                    data.items.forEach(item => {
+                        const source = item.item.find(i => i.source)?.source || '';
+                        const name = item.item.find(i => i.name)?.name || '';
+                        const description = item.item.find(i => i.des)?.des || '';
+                        classValue = item.item.find(i => i.class)?.class || '';
+                        createCard(source, name, description);
+                    });
+                } else {
+                    const cardContainer = document.getElementById('card-container');
+                    cardContainer.innerHTML = '';
+                    document.getElementById('card-container').innerHTML += `<p>There is no card</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching JSON:', error);
+            });
+        function createCard(source, name, description) {
+            const cardContainer = document.getElementById('card-container');
+            const card = document.createElement('div');
+            card.classList.add("card", `${classValue}`);
+            const image = document.createElement('img');
+            image.src = source;
+            image.alt = name;
+            const nameElement = document.createElement('p');
+            nameElement.textContent = name;
+            const descriptionElement = document.createElement('p');
+            descriptionElement.textContent = description;
+            card.appendChild(image);
+            card.appendChild(nameElement);
+            card.appendChild(descriptionElement);
+            cardContainer.appendChild(card);
+        }
+    }
+</script>
+<style>
+    #card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    .card {
+        border: 2px solid blue;
+        margin: 10px;
+        padding: 10px;
+        width: 150px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        background: #2196F3;
+    }
+
+    .card img {
+        max-width: 100%;
+        height: 100px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+</style>
