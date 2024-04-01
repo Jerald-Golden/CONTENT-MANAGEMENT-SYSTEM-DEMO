@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('#body').load('/cms-assets/home.html');
+        });
+        function logout() {
+            window.location.href = "index.html";
+        }
+        function home() {
+            $('#body').load('/cms-assets/home.html');
+
+        }
+        function product() {
+            $('#body').load('/cms-assets/product.html');
+        }
+        function addpage() {
+            $('#body').load('/cms-assets/addpage.html');
+        }
+    </script>
+
+</head>
+
+<body style="margin:0; padding: 0; height: 100vh;">
+    <div id="header" style="min-height: 5vh;max-height: 5vh;background: rgb(0, 217, 255); display: flex">
+        <nav
+            style="width: auto; margin: 0px auto; display: flex; align-items: center; padding: 5px; width: 100%; justify-content: space-between;">
+            <div class="logo">
+                <a href="/logout" style=" display: inline-block; padding: 10px; display: inline-block; display: flex; ">
+                    <img style="width: 30px"
+                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Logo_TV_2015.svg" /></a>
+            </div>
+            <div class="logout"
+                style="font-size: 14px; width: 70px; height: 35px; display: flex; justify-content: center; align-items: center; border: 1px solid black; border-radius: 5px; margin-left: 15px;">
+                <p><a style="text-decoration: none;padding: 7px 10px; align-items: center; justify-content: center;"
+                        href="index.html">LOGOUT</a></p>
+            </div>
+        </nav>
+    </div>
+    <div id="body"></div>
+    <div id="footer" style="min-height: 5vh;max-height: 5vh;bottom: 0; background: rgb(0, 217, 255);width: 100%;">
+    </div>
+</body>
+
+</html>

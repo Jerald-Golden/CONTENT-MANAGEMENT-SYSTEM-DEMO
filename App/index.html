@@ -1,0 +1,143 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        function layout1() {
+            $('#body').empty();
+            lay1();
+        }
+        function layout2() {
+            $('#body').empty();
+            lay2();
+        }
+        function layout3() {
+            $('#body').empty();
+            lay3();
+        }
+        $(function () {
+            $('#layout-content').empty();
+            document.getElementById("layout-content").style = "";
+            $('#body').load('/assets/home.html');
+        });
+        function home() {
+            $('#layout-content').empty();
+            document.getElementById("layout-content").style = "";
+            $('#body').load('/assets/home.html');
+        }
+        function products() {
+            $('#layout-content').empty();
+            document.getElementById("layout-content").style = "";
+            $('#body').load('/assets/product.html');
+        }
+        function lay1() {
+            document.getElementById("layout-content").innerHTML = "";
+            document.getElementById("layout-content").style = "background : gray;width:100%; height: 90vh;position:absolute";
+            document.getElementById("layout-content").innerHTML += `<div id="container" style="height:50vh;width:70%;background:transparent;margin-top:15vh;margin-left:15%;border: solid white;border-radius:5px"><h1>ABOUT PAGE</h1></div>`;
+            fetchlay1text()
+            async function fetchlay1text() {
+                try {
+                    const response = await fetch('http://localhost:3000/getlaytext');
+                    const data = await response.json();
+                    const lay1textContainer = document.getElementById('container');
+
+                    const lay1text = data.lay1text;
+
+                    const textElement = document.createElement('div');
+                    textElement.className = 'lay1-text';
+                    textElement.innerHTML = `<p style="margin-left:15px;margin-right:5px">${lay1text}</p>`;
+                    lay1textContainer.appendChild(textElement);
+
+                }
+                catch (error) {
+                    console.error('Error fetching second image:', error);
+                }
+            }
+
+        }
+        function lay2() {
+            document.getElementById("layout-content").innerHTML = "";
+            document.getElementById("layout-content").style = "background : gray;width:100%; height: 180vh;position:absolute";
+            document.getElementById("layout-content").innerHTML += `
+            <div id="img1"  style="width: 100%; height: 45vh; background: black;"></div>
+            <div id="img2"  style="width: 40%; height: 45vh; float: left; background: bisque;"></div>
+            <div id="img3" style="width: 60%; height: 45vh; background: gray; float: right;"></div>
+            <div id="img4"  style="width: 100%; height: 45vh;float: left; background: black;"></div>
+            <div id="img5"  style="width: 40%; height: 45vh; float: left; background: bisque;"></div>
+            <div id="img6" style="width: 60%; height: 45vh; background: gray; float: right;"></div>`;
+
+            fetch('/getLayImg')
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.getElementById('img1').innerHTML = ''
+                        document.getElementById('img1').innerHTML += `<div style="position: relative;"><img style="width: 100%; height: 100%;" src="${data.lay1}"><h1 style="position: absolute; top: 0; left: 0; width: 100%; text-align: center;color:white">${data.title}</h1></div>`
+                        document.getElementById('img2').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay2}">`
+                        document.getElementById('img3').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay3}">`
+                        document.getElementById('img4').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay4}">`
+                        document.getElementById('img5').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay5}">`
+                        document.getElementById('img6').innerHTML += `<img style="width:100%; height:100%;" src="${data.lay6}">`
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching JSON:', error);
+                });
+        }
+        function lay3() {
+            document.getElementById("layout-content").innerHTML = '';
+            document.getElementById("layout-content").style = "background : brown;width:100%; height: 90vh;position:absolute";
+            document.getElementById("layout-content").innerHTML += `<div id="container" style="height:50vh;width:70%;background:transparent;margin-top:15vh;margin-left:15%;border: solid white;border-radius:5px"><h1>ANOTHER PAGE</h1></div>`;
+        }
+
+        fetchJson();
+
+        async function fetchJson() {
+
+            fetch('/getlayouts')
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.layout1 === true) {
+                        document.getElementById("links").innerHTML += "<button onclick='layout1()' style='background: transparent; padding: 10px; cursor: pointer;border-radius: 5px;'>layout1</buton>";
+                    }
+                    if (data.layout2 === true) {
+                        document.getElementById("links").innerHTML += "<button onclick='layout2()' style='background: transparent; padding: 10px; cursor: pointer;border-radius: 5px;'>layout2</buton>";
+                    }
+                    if (data.layout3 === true) {
+                        document.getElementById("links").innerHTML += "<button onclick='layout3()' style='background: transparent; padding: 10px; cursor: pointer;border-radius: 5px;'>layout3</buton>";
+                    }
+                })
+        }
+
+    </script>
+</head>
+
+<body style="margin:0; padding: 0;">
+    <div id="header" style=" min-height: 5vh;max-height: 5vh; background: rgb(0, 217, 255); display: flex;">
+        <nav
+            style="width: auto; margin: 0px auto; display: flex; align-items: center; padding: 5px; width: 100%; justify-content: space-between;">
+            <div class="logo">
+                <a href="Index.html"
+                    style=" display: inline-block; padding: 10px; display: inline-block; display: flex; ">
+                    <img style="width: 30px"
+                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Logo_TV_2015.svg" /></a>
+            </div>
+            <div class="links" id="links" style="width: 60%; margin: 5px;display: flex; justify-content: center;">
+                <button onclick="home()"
+                    style="background: transparent; padding: 10px;cursor: pointer;border-radius: 5px;">Home</button>
+                <button onclick="products()"
+                    style="background: transparent; padding: 10px;cursor: pointer;border-radius: 5px;">Products</button>
+            </div>
+                <button class="button"
+                    style="background: transparent;padding: 10px;cursor: pointer;margin-top: 2vh;border-radius: 5px;" onclick="location.href='cms.html'">LOGIN</button>
+        </nav>
+    </div>
+    <div id="body"></div>
+    <div id="layout-content"></div>
+    <div id="footer" style="min-height: 5vh;max-height: 5vh; background: rgb(0, 217, 255);width: 100%;bottom: 0;position: fixed;">
+    </div>
+</body>
+
+</html>
