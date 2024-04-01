@@ -4,15 +4,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const bodyParser = require("body-parser");
 const path = require('path');
-const axios = require('axios');
 const fs = require("fs");
-const qs = require('qs');
 app.use(express.static("App"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let refreshToken = null;
-let username = null;
 
 //Json reading
 
@@ -228,7 +224,7 @@ const lay6storage = multer.diskStorage({
 
 const SlideImgupload = multer({ storage: slideImgstorage });
 app.post("/ApplyslideImg", SlideImgupload.single("image"), (req, res) => {
-  slideImgpath = "/uploads/slideimg/" + slideImgpath;
+  slideImgpath = "/uploads/slideImg/" + slideImgpath;
   Data.slides.push({ image: slideImgpath });
   var jsonString = JSON.stringify(Data);
 
@@ -244,7 +240,7 @@ app.post("/ApplyslideImg", SlideImgupload.single("image"), (req, res) => {
 
 const SecImgupload = multer({ storage: secImgstorage });
 app.post("/ApplysecImg", SecImgupload.single("image"), (req, res) => {
-  secImgpath = "/uploads/secimg/" + secImgpath;
+  secImgpath = "/uploads/secImg/" + secImgpath;
   Data.secImg = secImgpath;
   var jsonString = JSON.stringify(Data);
 
