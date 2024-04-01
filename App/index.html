@@ -40,7 +40,7 @@
             fetchlay1text()
             async function fetchlay1text() {
                 try {
-                    const response = await fetch('http://localhost:3000/getlaytext');
+                    const response = await fetch('/getlaytext');
                     const data = await response.json();
                     const lay1textContainer = document.getElementById('container');
 
