@@ -18,6 +18,4 @@ Express: Fast, minimalist web framework for Node.js.
 
 Multer: Middleware for handling multipart/form-data for file uploads.
 
-Cookie-parser: Middleware for parsing cookies in request objects.
-
 Axios: Promise-based HTTP client for Node.js and the browser.
